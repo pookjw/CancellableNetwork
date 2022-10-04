@@ -14,7 +14,7 @@
 
 - Objective-C를 사용해야 하며 Automatic Reference Counting과 Weak Reference 설정을 비활성화 합니다. Over Releasing 및 Memory Leak은 없어야 합니다.
 
-- 작업을 취소할 수 있어야 합니다.
+- 작업을 취소할 수 있어야 합니다. 취소했을 때 일부 사진을 이미 받은 상태라면 일부 사진들을 반영합니다.
 
 ## 배운 점
 
