@@ -61,6 +61,8 @@
             dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 
             NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                dispatch_semaphore_signal(semaphore);
+                
                 @synchronized (queue) {
                     if (error) {
                         [mutableErrors addObject:error];
@@ -79,8 +81,6 @@
                         [mutableErrors addObject:imageError];
                         [imageError release];
                     }
-
-                    dispatch_semaphore_signal(semaphore);
 
                     if ((mutableImages.count + mutableErrors.count) == count) {
                         NSArray<UIImage *> *images = [mutableImages copy];
