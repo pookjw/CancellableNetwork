@@ -44,17 +44,18 @@
         NSMutableDictionary<NSURLSessionTask *, void (^)(void)> *mutableTasks = [NSMutableDictionary<NSURLSessionTask *, void (^)(void)> new];
 
         //
+        
+        NSURLComponents *urlComponents = [NSURLComponents new];
+        urlComponents.scheme = @"https";
+        urlComponents.host = @"picsum.photos";
+        urlComponents.path = [NSString stringWithFormat:@"/%@/%@", @(size.width), @(size.height)];
+
+        NSURL *url = urlComponents.URL;
+        [urlComponents release];
+
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
 
         for (NSUInteger i = 0; i < count; i++) {
-            NSURLComponents *urlComponents = [NSURLComponents new];
-            urlComponents.scheme = @"https";
-            urlComponents.host = @"picsum.photos";
-            urlComponents.path = [NSString stringWithFormat:@"/%@/%@", @(size.width), @(size.height)];
-
-            NSURL *url = urlComponents.URL;
-            [urlComponents release];
-
-            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
             NSURLSession *session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.ephemeralSessionConfiguration];
 
             dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -90,9 +91,14 @@
                 }
             }];
 
-            [request release];
             [session finishTasksAndInvalidate];
 
+            // 왜 copy를 해줘야 할까? 왜 아래 코드로 하면 아무 일도 발생하지 않을까???
+//            void (^block)(void) = ^{
+//                dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+//                dispatch_release(semaphore);
+//            };
+//            mutableTasks[task] = block;
             void (^block)(void) = [^{
                 dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
                 dispatch_release(semaphore);
@@ -100,6 +106,8 @@
             mutableTasks[task] = block;
             [block release];
         }
+        
+        [request release];
 
         [mutableImages release];
         [mutableErrors release];
