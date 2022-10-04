@@ -22,6 +22,8 @@
 
 - Automatic Reference Counting을 비활성화한 환경에서는 `dispatch_object_t`도 직접 메모리 관리를 해줘야 합니다. 이걸 모르고 헤매다가 `free` 호출해주니 크래시가 발동해서 한참을 고민했음... ([dispatch_retain](https://developer.apple.com/documentation/dispatch/1496306-dispatch_retain) / [dispatch_release](https://developer.apple.com/documentation/dispatch/1496328-dispatch_release))
 
+- RxSwift, Combine, Swift Concurrency 쓰면 쉽게 구현 가능 ㅎㅎ
+
 ## 스크린샷
 
 ![](image.png)
