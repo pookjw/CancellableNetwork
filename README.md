@@ -10,7 +10,7 @@
 
 - 사진을 받아 오기 위해 필요한 코드는 최대한 Main Thread에서 돌지 않도록 합니다. 비동기를 적극적으로 활용합니다.
 
-- Objective-C를 통해 Automatic Reference Counting과 Weak Reference 설정을 비활성화 합니다. Over Releasing 및 Memory Leak은 없어야 합니다.
+- Objective-C를 사용해야 하며 Automatic Reference Counting과 Weak Reference 설정을 비활성화 합니다. Over Releasing 및 Memory Leak은 없어야 합니다.
 
 - 작업을 취소할 수 있어야 합니다.
 
