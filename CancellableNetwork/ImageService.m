@@ -99,6 +99,8 @@
 //                dispatch_release(semaphore);
 //            };
 //            mutableTasks[task] = block;
+            
+            // 왜 아래 코드는 잘 될까?
             void (^block)(void) = [^{
                 dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
                 dispatch_release(semaphore);
